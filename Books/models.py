@@ -13,7 +13,7 @@ class BookModel(models.Model):
     description=models.CharField(max_length=1000000)
     image=models.ImageField(upload_to='image/uploads')
     price=models.DecimalField(max_digits=12,decimal_places=2)
-    category=models.ManyToManyField(Category,null=True,blank=True)
+    category=models.ManyToManyField(Category,blank=True)
     def __str__(self):
         return self.title
 class Review(models.Model):
