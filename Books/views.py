@@ -98,7 +98,6 @@ def ReturnBook(request,id):
         borrow_instance.save(
             update_fields=['return_date']
         )
-        borrow_instance.delete()
     
     return redirect('home')
 
@@ -110,7 +109,7 @@ class BorrowedBookView(LoginRequiredMixin,ListView):
          queryset=super().get_queryset().filter(user=self.request.user)
          return queryset
 
-class ReviewBook(CreateView):
+class ReviewBook(LoginRequiredMixin,CreateView):
     template_name="review.html"
     model=Review
     form_class=ReviewForm

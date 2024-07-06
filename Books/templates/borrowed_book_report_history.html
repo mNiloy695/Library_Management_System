@@ -16,17 +16,25 @@
       <div>
         <h5 class="card-title">title: {{book.book.title}}</h5>
         <p class="card-text">Description: {{book.book.description}}</p>
-        <p>price: {{book.book.price}}</p>
+        <p>{{book.book.price}}</p>
+        {% if  not book.return_date  %}
+        <p>YES</p>
+        <p>{{book.borrow_date}}</p>
+        {% else %}
+        <p>{{book.return_date}} </p>
+        {% endif %}
         Category
         <div class='d-flex flex-wrap'>
           
          {% for ca in book.book.category.all  %}
-          <button  class="btn btn-dark btn-md m-2" type='button' disabled>{{ca}}</button>
+          <button  class="btn btn-dark btn-md m-2" type='button' disabled>{{ ca }}</button>
           {% endfor %}
         </div>
         <div class='d-flex flex-wrap'>
           {% if user.is_authenticated %}
+          {% if  not book.return_date %}
           <a href="{% url 'return_book' book.book.id %}" class="btn btn-primary m-1 btn-md">return</a>
+          {% endif %}
           <a href="{% url 'review' book.book.id %}" class="btn btn-primary m-1 btn-md">review</a>
           
           {% endif %}
