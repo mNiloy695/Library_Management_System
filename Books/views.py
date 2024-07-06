@@ -12,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from accounts.views import send_mail
 from datetime import datetime
+from .models import Review
+from .forms import ReviewForm
 # Create your views here.
 # class ReviewView(CreateView):
 #     model=Review
@@ -107,4 +109,19 @@ class BorrowedBookView(LoginRequiredMixin,ListView):
     def get_queryset(self):
          queryset=super().get_queryset().filter(user=self.request.user)
          return queryset
+
+class ReviewBook(CreateView):
+    template_name="review.html"
+    model=Review
+    form_class=ReviewForm
+    success_url=reverse_lazy("home")
+   
+    def form_valid(self, form):
+        book=BookModel.objects.get(pk=self.kwargs.get('id'))
+        print(self.kwargs.get('id'))
+        form.instance.user=self.request.user
+        print(form.instance.user)
+        form.instance.book=book
+        return super().form_valid(form)
+    
 

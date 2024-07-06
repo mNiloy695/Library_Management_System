@@ -27,6 +27,7 @@
         <div class='d-flex flex-wrap'>
           {% if user.is_authenticated %}
           <a href="{% url 'return_book' book.book.id %}" class="btn btn-primary m-1 btn-md">return</a>
+          <a href="{% url 'review' book.book.id %}" class="btn btn-primary m-1 btn-md">review</a>
           
           {% endif %}
         </div>
